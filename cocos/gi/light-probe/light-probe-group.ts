@@ -74,10 +74,10 @@ export class LightProbeGroup extends Component {
     @editable
     @type([Vec3])
     @visible(false)
-    get probes (): Vec3[] {
+    get probes(): Vec3[] {
         return this._probes;
     }
-    set probes (val: Vec3[]) {
+    set probes(val: Vec3[]) {
         this._probes = val;
     }
 
@@ -85,7 +85,7 @@ export class LightProbeGroup extends Component {
     @type(PlaceMethod)
     @tooltip('i18n:light_probe_group.method')
     @displayName('Generating Method')
-    get method () {
+    get method() {
         return this._method;
     }
     // Support this feature later.
@@ -100,10 +100,10 @@ export class LightProbeGroup extends Component {
     @editable
     @tooltip('i18n:light_probe_group.minPos')
     @displayName('Generating Min Pos')
-    get minPos (): Vec3 {
+    get minPos(): Vec3 {
         return this._minPos;
     }
-    set minPos (val: Vec3) {
+    set minPos(val: Vec3) {
         this._minPos = val;
     }
 
@@ -114,10 +114,10 @@ export class LightProbeGroup extends Component {
     @editable
     @tooltip('i18n:light_probe_group.maxPos')
     @displayName('Generating Max Pos')
-    get maxPos (): Vec3 {
+    get maxPos(): Vec3 {
         return this._maxPos;
     }
-    set maxPos (val: Vec3) {
+    set maxPos(val: Vec3) {
         this._maxPos = val;
     }
 
@@ -126,10 +126,10 @@ export class LightProbeGroup extends Component {
     @type(CCInteger)
     @tooltip('i18n:light_probe_group.nProbesX')
     @displayName('Number Of Probes X')
-    get nProbesX (): number {
+    get nProbesX(): number {
         return this._nProbesX;
     }
-    set nProbesX (val: number) {
+    set nProbesX(val: number) {
         this._nProbesX = val;
     }
 
@@ -138,10 +138,10 @@ export class LightProbeGroup extends Component {
     @type(CCInteger)
     @tooltip('i18n:light_probe_group.nProbesY')
     @displayName('Number Of Probes Y')
-    get nProbesY (): number {
+    get nProbesY(): number {
         return this._nProbesY;
     }
-    set nProbesY (val: number) {
+    set nProbesY(val: number) {
         this._nProbesY = val;
     }
 
@@ -150,14 +150,14 @@ export class LightProbeGroup extends Component {
     @type(CCInteger)
     @tooltip('i18n:light_probe_group.nProbesZ')
     @displayName('Number Of Probes Z')
-    get nProbesZ (): number {
+    get nProbesZ(): number {
         return this._nProbesZ;
     }
-    set nProbesZ (val: number) {
+    set nProbesZ(val: number) {
         this._nProbesZ = val;
     }
 
-    public onLoad () {
+    public onLoad() {
         if (!EDITOR) {
             return;
         }
@@ -172,7 +172,7 @@ export class LightProbeGroup extends Component {
         }
     }
 
-    public onEnable () {
+    public onEnable() {
         if (!EDITOR) {
             return;
         }
@@ -187,7 +187,7 @@ export class LightProbeGroup extends Component {
         }
     }
 
-    public onDisable () {
+    public onDisable() {
         if (!EDITOR) {
             return;
         }
@@ -202,7 +202,7 @@ export class LightProbeGroup extends Component {
         }
     }
 
-    public generateLightProbes () {
+    public generateLightProbes() {
         if (!this.node) {
             return;
         }
@@ -219,7 +219,7 @@ export class LightProbeGroup extends Component {
         this.onProbeChanged();
     }
 
-    public onProbeChanged (updateTet = true, emitEvent = true) {
+    public onProbeChanged(updateTet = true, emitEvent = true) {
         this.node.scene.globals.lightProbeInfo.syncData(this.node, this.probes);
         this.node.scene.globals.lightProbeInfo.update(updateTet);
 
