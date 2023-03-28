@@ -51,15 +51,24 @@ const Elements = {
             const panel = this;
 
             panel.$.canvas.addEventListener('mousedown', async (event) => {
-                await callSkeletonPreviewFunction('onMouseDown', { x: event.x, y: event.y });
+                await callSkeletonPreviewFunction('onMouseDown', { x: event.x, y: event.y, button: event.button });
 
                 async function mousemove(event) {
                     await callSkeletonPreviewFunction('onMouseMove', {
                         movementX: event.movementX,
                         movementY: event.movementY,
+                        button: event.button
                     });
 
                     panel.isPreviewDataDirty = true;
+                }
+
+                async function mousewheel(event) {
+                    await callSkeletonPreviewFunction('onMouseWheel', {
+                        wheelDeltaY: event.wheelDeltaY
+                    })
+                    panel.isPreviewDataDirty = true;
+                    panel.refreshPreview();
                 }
 
                 async function mouseup(event) {
@@ -68,12 +77,14 @@ const Elements = {
                         y: event.y,
                     });
 
+                    document.removeEventListener('mousewheel', mousewheel);
                     document.removeEventListener('mousemove', mousemove);
                     document.removeEventListener('mouseup', mouseup);
 
                     panel.isPreviewDataDirty = false;
                 }
 
+                document.addEventListener('mousewheel', mousewheel);
                 document.addEventListener('mousemove', mousemove);
                 document.addEventListener('mouseup', mouseup);
 

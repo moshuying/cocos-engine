@@ -106,7 +106,7 @@ exports.ready = async function () {
     });
 
     panel.$.canvas.addEventListener('mousedown', async (event) => {
-        await callMaterialPreviewFunction('onMouseDown', { x: event.x, y: event.y });
+        await callMaterialPreviewFunction('onMouseDown', { x: event.x, y: event.y, button: event.button });
 
         async function mousemove(event) {
             await callMaterialPreviewFunction('onMouseMove', {
@@ -117,17 +117,27 @@ exports.ready = async function () {
             panel.isPreviewDataDirty = true;
         }
 
+        async function mousewheel(event) {
+            await callMaterialPreviewFunction('onMouseWheel', {
+                wheelDeltaY: event.wheelDeltaY
+            })
+            panel.isPreviewDataDirty = true;
+            panel.refreshPreview();
+        }
+
         async function mouseup(event) {
             await callMaterialPreviewFunction('onMouseUp', {
                 x: event.x,
                 y: event.y,
             });
 
+            document.removeEventListener('mousewheel', mousewheel);
             document.removeEventListener('mousemove', mousemove);
             document.removeEventListener('mouseup', mouseup);
 
             panel.isPreviewDataDirty = false;
         }
+        document.addEventListener('mousewheel', mousewheel);
         document.addEventListener('mousemove', mousemove);
         document.addEventListener('mouseup', mouseup);
 

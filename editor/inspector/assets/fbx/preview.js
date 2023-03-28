@@ -346,7 +346,7 @@ const Elements = {
         ready() {
             const panel = this;
             panel.$.canvas.addEventListener('mousedown', async (event) => {
-                await callModelPreviewFunction('onMouseDown', { x: event.x, y: event.y });
+                await callModelPreviewFunction('onMouseDown', { x: event.x, y: event.y, button: event.button });
 
                 async function mousemove(event) {
                     await callModelPreviewFunction('onMouseMove', {
@@ -357,6 +357,14 @@ const Elements = {
                     panel.isPreviewDataDirty = true;
                 }
 
+                async function mousewheel(event) {
+                    await callModelPreviewFunction('onMouseWheel', {
+                        wheelDeltaY: event.wheelDeltaY
+                    })
+                    panel.isPreviewDataDirty = true;
+                    panel.refreshPreview();
+                }
+
                 async function mouseup(event) {
                     await callModelPreviewFunction('onMouseUp', {
                         x: event.x,
@@ -365,12 +373,14 @@ const Elements = {
 
                     document.removeEventListener('mousemove', mousemove);
                     document.removeEventListener('mouseup', mouseup);
+                    document.removeEventListener('mousewheel', mousewheel);
 
                     panel.isPreviewDataDirty = false;
                 }
 
                 document.addEventListener('mousemove', mousemove);
                 document.addEventListener('mouseup', mouseup);
+                document.addEventListener('mousewheel', mousewheel);
 
                 panel.isPreviewDataDirty = true;
             });
