@@ -160,7 +160,6 @@ exports.methods = {
 
     async abort() {
         this.reset();
-        await Editor.Message.request('scene', 'preview-material', this.asset.uuid);
     },
 
     reset() {
